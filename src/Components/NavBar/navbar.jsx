@@ -1,373 +1,242 @@
-// import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-// import { useState, useEffect } from "react";
-// import { FiMenu, FiX, FiArrowRight, FiMoon, FiSun } from "react-icons/fi";
-// import { useNavigate } from "react-router-dom";
-// import logoAR from "../../assets/siyanaEn.svg";
-
-// const navItems = [
-//   { name: "Home", href: "/" },
-//   { name: "Features", href: "/#features" },
-//   { name: "Pricing", href: "/pricing" },
-//   { name: "Contact Us", href: "/#contactus" },
-// ];
-
-// export default function Navbar() {
-//   const navigate = useNavigate();
-//   const [mobileOpen, setMobileOpen] = useState(false);
-//   const [hidden, setHidden] = useState(false);
-//   const [lastScrollY, setLastScrollY] = useState(0);
-//   const { scrollY } = useScroll();
-
-//   const [language, setLanguage] = useState("EN");
-//   const [darkMode, setDarkMode] = useState(false);
-
-//   // Scroll hide/show behavior
-//   useMotionValueEvent(scrollY, "change", (latest) => {
-//     if (latest < 0) return;
-//     if (latest > lastScrollY) {
-//       setHidden(true);
-//     } else {
-//       setHidden(false);
-//     }
-//     setLastScrollY(latest);
-//   });
-
-//   useEffect(() => {
-//     if (mobileOpen) setMobileOpen(false);
-//   }, [hidden]);
-
-//   const toggleLanguage = () => {
-//     setLanguage((prev) => (prev === "EN" ? "AR" : "EN"));
-//   };
-
-//   const toggleTheme = () => {
-//     setDarkMode((prev) => !prev);
-//     document.documentElement.classList.toggle("dark");
-//   };
-
-//   return (
-//     <motion.header
-//       initial={{ y: -15 }}
-//       animate={{
-//         y: hidden ? -15 : 0,
-//         transition: { type: "spring", stiffness: 400, damping: 30 },
-//       }}
-//       className="fixed w-full z-50"
-//     >
-//       {/* Desktop Navbar */}
-//       <div className="hidden md:flex justify-center">
-//         <motion.div className="fixed mx-auto flex items-center justify-center px-8 py-3.5 mt-5 rounded-2xl border border-gray-300 bg-white/30 backdrop-blur-lg dark:bg-gray-800/30">
-//           <img className="w-24" src={logoAR} alt="logoAR" />
-
-//           <nav className="flex space-x-1 mx-4">
-//             {navItems.map((item) => (
-//               <motion.div key={item.name}>
-//                 <a
-//                   href={item.href}
-//                   className="font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 px-4 py-2 rounded-lg relative group"
-//                 >
-//                   {item.name}
-//                   <motion.span
-//                     className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-blue-400"
-//                     initial={{ width: 0 }}
-//                     whileHover={{ width: "100%" }}
-//                     transition={{ duration: 0.3 }}
-//                   />
-//                 </a>
-//               </motion.div>
-//             ))}
-//           </nav>
-
-//           {/* Toggles */}
-//           <div className="flex items-center gap-3 ml-4">
-//             <button
-//               onClick={toggleLanguage}
-//               className="text-sm text-gray-700 dark:text-gray-200 hover:text-mainBlue"
-//             >
-//               {language === "EN" ? (
-//                 <span className="fi fi-us rounded-[2px]  w-8 h-w-8"></span>
-//               ) : (
-//                 <span className="fi fi-sa rounded-[2px]  w-8 h-w-8"></span>
-//               )}
-//             </button>
-
-//             <button
-//               onClick={toggleTheme}
-//               className="text-gray-700 dark:text-gray-200 hover:text-yellow-400"
-//             >
-//               {darkMode ? <FiSun /> : <FiMoon />}
-//             </button>
-
-//             <motion.button
-//               onClick={() => navigate("/pricing")}
-//               whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px" }}
-//               whileTap={{ scale: 0.95 }}
-//               className="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-full shadow-lg"
-//             >
-//               Get Started
-//             </motion.button>
-//           </div>
-//         </motion.div>
-//       </div>
-
-//       {/* Mobile Navbar */}
-//       <motion.div
-//         className="md:hidden flex justify-between items-center p-3 bg-white/30 backdrop-blur-lg rounded-2xl mt-5 mx-3 dark:bg-gray-800/30"
-//         animate={{
-//           y: hidden ? -100 : 0,
-//           transition: { type: "spring", stiffness: 400, damping: 30 },
-//         }}
-//       >
-//         <img className="w-24" src={logoAR} alt="logoAR" />
-
-//         <motion.button
-//           whileTap={{ scale: 0.9 }}
-//           onClick={() => setMobileOpen(!mobileOpen)}
-//           className="text-gray-700 dark:text-gray-200"
-//         >
-//           {mobileOpen ? <FiX size={24} /> : <FiMenu size={30} />}
-//         </motion.button>
-//       </motion.div>
-
-//       {/* Mobile Menu */}
-//       {mobileOpen && (
-//         <motion.div
-//           initial={{ opacity: 0, y: -20 }}
-//           animate={{ opacity: 1, y: 0 }}
-//           transition={{ duration: 0.3 }}
-//           className="md:hidden absolute bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-xl rounded-2xl mt-2 mx-3 right-0 left-0"
-//         >
-//           <div className="flex flex-col px-6 py-4">
-//             {navItems.map((item, i) => (
-//               <motion.a
-//                 key={item.name}
-//                 initial={{ x: -50, opacity: 0 }}
-//                 animate={{ x: 0, opacity: 1 }}
-//                 transition={{ delay: i * 0.1 }}
-//                 href={item.href}
-//                 className="flex items-center justify-between py-4 text-gray-800 dark:text-white border-b border-gray-100 dark:border-gray-700 group"
-//               >
-//                 <span>{item.name}</span>
-//                 <motion.div
-//                   initial={{ x: -10 }}
-//                   animate={{ x: 0 }}
-//                   transition={{ delay: i * 0.1 + 0.2 }}
-//                 >
-//                   <FiArrowRight className="text-mainBlue group-hover:translate-x-1 transition-transform" />
-//                 </motion.div>
-//               </motion.a>
-//             ))}
-
-//             {/* Toggles */}
-//             <div className="flex items-center justify-between mt-4">
-//               <button onClick={toggleLanguage}>
-//                 {language === "EN" ? (
-//                   <span className="fi fi-us w-5 h-5"></span>
-//                 ) : (
-//                   <span className="fi fi-sa w-5 h-5"></span>
-//                 )}
-//               </button>
-
-//               <button onClick={toggleTheme} className="text-gray-700 dark:text-gray-200">
-//                 {darkMode ? <FiSun /> : <FiMoon />}
-//               </button>
-//             </div>
-
-//             <motion.button
-//               onClick={() => navigate("/pricing")}
-//               whileTap={{ scale: 0.95 }}
-//               className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-full shadow-lg"
-//             >
-//               Get Started
-//             </motion.button>
-//           </div>
-//         </motion.div>
-//       )}
-//     </motion.header>
-//   );
-// }
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState, useEffect } from "react";
-import { FiMenu, FiX, FiArrowRight, FiMoon, FiSun } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
-import logoAR from "../../assets/siyanaEn.svg";
+import { FiX, FiArrowRight, FiUser } from "react-icons/fi";
+import { CgMenuRight } from "react-icons/cg";
+import { BsBagHeartFill } from "react-icons/bs";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import logo from "../../assets/imgs/logo.svg";
 
 const navItems = [
-  { name: "Home", href: "/" },
-  { name: "Features", href: "/#features" },
-  { name: "Pricing", href: "/pricing" },
+  { name: "Home", href: "/home" },
+  { name: "Collections", href: "/collections" },
   { name: "Contact Us", href: "/contactus" },
 ];
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const { scrollY } = useScroll();
 
-  const [language, setLanguage] = useState("EN");
-  const [darkMode, setDarkMode] = useState(false);
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
+  // Handle scroll to hide/show navbar
   useMotionValueEvent(scrollY, "change", (latest) => {
     if (latest < 0) return;
-    if (latest > lastScrollY) setHidden(true);
-    else setHidden(false);
-    setLastScrollY(latest);
+    
+    // Only update state if scroll direction changes significantly
+    const isScrollingDown = latest > lastScrollY;
+    if (isScrollingDown !== hidden || Math.abs(latest - lastScrollY) > 10) {
+      setHidden(isScrollingDown);
+      setLastScrollY(latest);
+    }
   });
-
-  useEffect(() => {
-    if (mobileOpen) setMobileOpen(false);
-  }, [hidden]);
-
-  const toggleLanguage = () => {
-    setLanguage((prev) => (prev === "EN" ? "AR" : "EN"));
-  };
-
-  const toggleTheme = () => {
-    setDarkMode((prev) => !prev);
-    document.documentElement.classList.toggle("dark");
-  };
 
   return (
     <motion.header
-      initial={{ y: -15 }}
+      initial={{ y: 0 }}
       animate={{
-        y: hidden ? -15 : 0,
+        y: hidden ? -120 : 0,
         transition: { type: "spring", stiffness: 400, damping: 30 },
       }}
-      className="fixed w-full z-50"
+      className="fixed top-0 left-0 w-full z-50"
     >
+      {/* Free shipping banner */}
+      <div className="w-full">
+        <div className="flex justify-center md:justify-between items-center bg-mainBlue text-white font-medium py-1.5 px-5 sm:px-8 md:px-14 lg:px-24 xl:px-28">
+          <p className="hidden md:block md:text-base">WELCOME TO ZENVY STORE</p>
+          <p className="md:text-base">Free Shipping Above 1350 LE.</p>
+        </div>
+      </div>
+
       {/* Desktop Navbar */}
-      <div className="hidden md:flex justify-center">
-        <motion.div className="fixed mx-auto flex items-center justify-center px-8 py-3.5 mt-5 rounded-2xl border border-gray-300 bg-white/30 backdrop-blur-lg dark:bg-gray-800/30">
-          <img className="w-24" src={logoAR} alt="logoAR" />
-
-          <nav className="flex space-x-1 mx-4">
-            {navItems.map((item) => (
-              <motion.div key={item.name}>
-                <a
-                  href={item.href}
-                  className="font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 px-4 py-2 rounded-lg relative group"
-                >
-                  {item.name}
-                  <motion.span
-                    className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-blue-400"
-                    initial={{ width: 0 }}
-                    whileHover={{ width: "100%" }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </a>
-              </motion.div>
-            ))}
-          </nav>
-
-          {/* Toggles */}
-          <div className="flex items-center gap-4 ml-6 text-sm font-medium">
-            {/* Language Text Toggle */}
-            <span
-              onClick={toggleLanguage}
-              className="cursor-pointer text-gray-800 dark:text-gray-100 hover:text-mainBlue"
+      <div className="hidden md:flex justify-between items-center py-3 px-5 sm:px-8 md:px-14 lg:px-24 xl:px-28 border-b border-gray-200 bg-white dark:bg-gray-900/80 backdrop-blur-xl w-full">
+        <Link to="/home">
+          <motion.img 
+            className="w-20" 
+            src={logo} 
+            alt="logo"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          />
+        </Link>
+        
+        <nav className="flex space-x-4">
+          {navItems.map((item) => (
+            <motion.div 
+              key={item.name}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
             >
-              {language}
+              <Link
+                to={item.href}
+                className="font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 px-4 py-2 rounded-lg relative group"
+              >
+                {item.name}
+                <motion.span
+                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-blue-400"
+                  initial={{ width: 0 }}
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.3 }}
+                />
+              </Link>
+            </motion.div>
+          ))}
+        </nav>
+        
+        <div className="flex items-center gap-4 text-sm font-medium">
+          <Link 
+            to="/profile" 
+            className="text-gray-700 dark:text-gray-200 hover:text-mainBlue"
+          >
+            <FiUser size={22} />
+          </Link>
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => navigate("/cart")}
+            className="relative text-gray-700 dark:text-gray-200"
+          >
+            <BsBagHeartFill size={22} />
+            <span className="absolute -top-1.5 -right-2.5 bg-mainBlue text-white text-[10px] font-bold px-1.5 rounded-full shadow-sm">
+              0
             </span>
-
-            {/* Theme Icon Toggle */}
-            <button
-              onClick={toggleTheme}
-              className="text-gray-700 dark:text-gray-200 hover:text-yellow-400"
-            >
-              {darkMode ? <FiSun /> : <FiMoon />}
-            </button>
-
-            {/* CTA */}
-            <motion.button
-              onClick={() => navigate("/pricing")}
-              whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px" }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-full shadow-lg"
-            >
-              Get Started
-            </motion.button>
-          </div>
-        </motion.div>
+          </motion.button>
+        </div>
       </div>
 
       {/* Mobile Navbar */}
-      <motion.div
-        className="md:hidden flex justify-between items-center p-3 bg-white/30 backdrop-blur-lg rounded-2xl mt-5 mx-3 dark:bg-gray-800/30"
-        animate={{
-          y: hidden ? -100 : 0,
-          transition: { type: "spring", stiffness: 400, damping: 30 },
-        }}
-      >
-        <img className="w-24" src={logoAR} alt="logoAR" />
-
+      <div className="md:hidden fixed left-0 w-full z-50 bg-white dark:bg-gray-900/70 backdrop-blur-md px-4 py-3 flex items-center justify-between">
         <motion.button
           whileTap={{ scale: 0.9 }}
-          onClick={() => setMobileOpen(!mobileOpen)}
+          onClick={() => setMobileOpen(true)}
           className="text-gray-700 dark:text-gray-200"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
         >
-          {mobileOpen ? <FiX size={24} /> : <FiMenu size={30} />}
+          <CgMenuRight className="rotate-180" size={28} />
         </motion.button>
-      </motion.div>
 
-      {/* Mobile Menu */}
+        <Link to="/home">
+          <motion.img 
+            className="w-14" 
+            src={logo} 
+            alt="logo"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          />
+        </Link>
+
+        <div className="flex items-center gap-4">
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => navigate("/profile")}
+            className="text-gray-700 dark:text-gray-200"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <FiUser size={22} />
+          </motion.button>
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => navigate("/cart")}
+            className="relative text-gray-700 dark:text-gray-200"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            <BsBagHeartFill size={22} />
+            <span className="absolute -top-1.5 -right-2.5 bg-mainBlue text-white text-[12px] font-bold px-1.5 rounded-full shadow-sm">
+              0
+            </span>
+          </motion.button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Backdrop */}
       {mobileOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden absolute bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-xl rounded-2xl mt-2 mx-3 right-0 left-0"
-        >
-          <div className="flex flex-col px-6 py-4">
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setMobileOpen(false)}
+          className="fixed inset-0 bg-black z-40"
+        />
+      )}
+
+      {/* Mobile Sidebar */}
+      <motion.div
+        initial={{ x: "-100%", opacity: 0 }}
+        animate={mobileOpen ? { x: 0, opacity: 1 } : { x: "-100%", opacity: 0 }}
+        transition={{
+          type: "spring",
+          stiffness: 300,
+          damping: 35,
+        }}
+        className="md:hidden fixed top-0 left-0 h-full w-4/5 bg-white dark:bg-gray-900 shadow-2xl z-50 px-6 py-6 flex flex-col justify-between rounded-tr-3xl rounded-br-3xl"
+      >
+        {/* Top: Close button + logo */}
+        <div>
+          <div className="flex justify-between items-center mb-8">
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setMobileOpen(false)}
+              className="text-gray-800 dark:text-white hover:text-mainBlue transition-colors"
+            >
+              <FiX size={28} />
+            </motion.button>
+            <img className="w-14" src={logo} alt="logo" />
+          </div>
+
+          {/* Navigation items */}
+          <nav className="space-y-2">
             {navItems.map((item, i) => (
-              <motion.a
-                key={item.name}
-                initial={{ x: -50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: i * 0.1 }}
-                href={item.href}
-                className="flex items-center justify-between py-4 text-gray-800 dark:text-white border-b border-gray-100 dark:border-gray-700 group"
-              >
-                <span>{item.name}</span>
+              <Link to={item.href} className="group" key={item.name}>
                 <motion.div
-                  initial={{ x: -10 }}
-                  animate={{ x: 0 }}
-                  transition={{ delay: i * 0.1 + 0.2 }}
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="flex items-center justify-between py-3 rounded-xl text-gray-800 dark:text-white hover:bg-mainBlue/10 dark:hover:bg-white/10 transition-all border border-transparent hover:border-mainBlue"
                 >
+                  <span className="font-medium">{item.name}</span>
                   <FiArrowRight className="text-mainBlue group-hover:translate-x-1 transition-transform" />
                 </motion.div>
-              </motion.a>
+              </Link>
             ))}
+          </nav>
 
-            {/* Toggles */}
-            <div className="flex items-center justify-between mt-4 text-sm font-medium">
-              {/* Language Text */}
-              <span
-                onClick={toggleLanguage}
-                className="cursor-pointer text-gray-800 dark:text-white hover:text-mainBlue"
-              >
-                {language}
-              </span>
-
-              {/* Theme Icon */}
-              <button onClick={toggleTheme} className="text-gray-700 dark:text-gray-200">
-                {darkMode ? <FiSun /> : <FiMoon />}
-              </button>
-            </div>
-
-            {/* CTA Button */}
-            <motion.button
-              onClick={() => navigate("/pricing")}
-              whileTap={{ scale: 0.95 }}
-              className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-400 text-white rounded-full shadow-lg"
+          {/* Cart Button */}
+          <div className="mt-8 flex justify-start">
+            <Link 
+              to="/cart" 
+              className="flex items-center gap-2 text-gray-800 dark:text-white hover:text-mainBlue hover:scale-105 transition-transform"
             >
-              Get Started
-            </motion.button>
+              <BsBagHeartFill size={22} />
+              <span className="text-sm font-medium">Cart</span>
+            </Link>
           </div>
-        </motion.div>
-      )}
+        </div>
+
+        {/* Bottom Login/Profile Button */}
+        <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+          <Link 
+            to="/login" 
+            className="w-full flex items-center justify-center gap-2 text-gray-800 dark:text-white hover:text-mainBlue hover:scale-105 transition-transform"
+          >
+            <FiUser size={22} />
+            <span className="text-sm font-medium">Login</span>
+          </Link>
+        </div>
+      </motion.div>
     </motion.header>
   );
 }
