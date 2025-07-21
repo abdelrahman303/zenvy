@@ -1,6 +1,6 @@
 // import { FaFacebookF, FaDribbble, FaPinterestP, FaTimes } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-import logo from '../../assets/SiyanaEN.svg';
+import logo from '../../assets/imgs/logo.svg';
 const Footer = () => {
     return (
         <footer className="bg-white border-t py-8 md:py-20 lg:py-28 px-5 sm:px-8 md:px-14 lg:px-24 xl:px-28 ">
@@ -8,7 +8,7 @@ const Footer = () => {
                 {/* Logo + Description */}
                 <div className="col-span-2 space-y-4">
                     <div className="flex items-center gap-2">
-                        <img src={logo} alt="standout logo" className='w-40' />
+                        <img src={logo} alt="standout logo" className='w-14' />
                     </div>
                     <p className="text-gray-500">
                         Empowering teams to organize, collaborate, and achieve their goals effortlessly.

@@ -226,14 +226,14 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Bottom Login/Profile Button */}
+        {/* Bottom Profile/Profile Button */}
         <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
           <Link 
-            to="/login" 
+            to="/profile" 
             className="w-full flex items-center justify-center gap-2 text-gray-800 dark:text-white hover:text-mainBlue hover:scale-105 transition-transform"
           >
             <FiUser size={22} />
-            <span className="text-sm font-medium">Login</span>
+            <span className="text-sm font-medium">Profile</span>
           </Link>
         </div>
       </motion.div>

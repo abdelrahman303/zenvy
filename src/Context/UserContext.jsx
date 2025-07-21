@@ -4,25 +4,25 @@ import { createContext, useEffect, useState } from "react";
 export const UserContext = createContext()
 export default function UserContextProvider(props) {
     // ana m7tag el token fel navbar w el login w el register 34an lw m4 3aml login mzhrlo4
-    // el ul bta3t el home w el product w kdaa azhrlo bs el login w el register 
+    // el ui bta3t el home w el product w kdaa azhrlo bs el login w el register 
 
-    const [token, setToken] = useState(localStorage.getItem('token'))
+    const [token, setToken] = useState(localStorage.getItem('accessToken'))
     const [userId, setUserId] = useState(null)
 
     function convertToken() {
-        const data = jwtDecode(localStorage.getItem('token'))
-        setUserId(data.id)
+        const data = jwtDecode(localStorage.getItem('accessToken'))
+        setUserId(data._id)
         console.log({ userId });
     }
 
     useEffect(() => {
 
         if (token) {
-            localStorage.setItem('token', token)
+            localStorage.setItem('accessToken', token)
             convertToken()
 
         } else {
-            localStorage.removeItem('token')
+            localStorage.removeItem('accessToken')
         }
         // token ? localStorage.setItem('token', token) : localStorage.removeItem('token')
     }, [token])
