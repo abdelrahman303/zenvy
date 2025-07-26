@@ -32,11 +32,18 @@ export default function ConfirmEmail() {
         onSubmit: submitForm,
         validationSchema: schema,
     })
+    const geustId = localStorage.getItem('guest_id')
 
     // Function to handle form submission
     async function submitForm(values) {
         try {
-            const { data } = await axios.patch('https://sheshop.salis.app/auth/confirm-email', values);
+            const { data } = await axios.patch('https://sheshop.salis.app/auth/confirm-email', values,
+                {
+                    headers: {
+                        geustId
+                    }
+                }
+            );
             if (data?.message === 'Email confirmed successfully') {
                 console.log('Email confirmed successfully');
                 localStorage.removeItem('verificationToken');
@@ -88,16 +95,6 @@ export default function ConfirmEmail() {
                         Confirm Email
                     </button>
                 </form>
-
-                {/* <p className="mt-6 text-sm text-center text-gray-400">
-                    Didn’t receive the code?{' '}
-                    <button
-                        onClick={() => alert('Resend OTP logic here')}
-                        className="text-black font-medium hover:underline"
-                    >
-                        Resend
-                    </button>
-                </p> */}
             </motion.div>
         </div>
     )

@@ -1,6 +1,13 @@
+import { useEffect } from "react"
 
 
 const ContactUs = () => {
+
+
+    useEffect(() => {
+        document.title = 'Contact Us'
+        window.scrollTo(0, 0)
+    }, [])
     return (
         <div>
             <div className="pt-24 md:pt-36 main-gradient-light-bg flex flex-col items-center py-10 px-4">
@@ -49,7 +56,7 @@ const ContactUs = () => {
                             placeholder="How we can help?"
                             className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-400 mb-6"
                         ></textarea>
-                        
+
                     </div>
                 </div>
 

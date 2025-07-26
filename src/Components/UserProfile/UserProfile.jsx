@@ -21,18 +21,13 @@ export default function UserProfile() {
     async function GetUserProfile() {
         try {
             const response = await axios.get('https://sheshop.salis.app/auth/profile', {
-                headers: {
-                    authorization: token,
-                },
+                headers: { authorization: token },
             });
             setUser(response.data.results);
-            console.log(user);
-
         } catch (error) {
             console.error("Error fetching user profile:", error.response?.data?.message || error.message);
         }
     }
-
     function handleLogout() {
         localStorage.removeItem('accessToken');
         navigate('/login');

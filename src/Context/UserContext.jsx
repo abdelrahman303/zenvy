@@ -7,27 +7,31 @@ export default function UserContextProvider(props) {
     // el ui bta3t el home w el product w kdaa azhrlo bs el login w el register 
 
     const [token, setToken] = useState(localStorage.getItem('accessToken'))
-    const [userId, setUserId] = useState(null)
+    // const [userId, setUserId] = useState(null)
+    // const [userRole, setUserRole] = useState(null)
 
-    function convertToken() {
-        const data = jwtDecode(localStorage.getItem('accessToken'))
-        setUserId(data._id)
-        console.log({ userId });
-    }
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
-
         if (token) {
             localStorage.setItem('accessToken', token)
             convertToken()
-
         } else {
             localStorage.removeItem('accessToken')
         }
         // token ? localStorage.setItem('token', token) : localStorage.removeItem('token')
     }, [token])
 
-    return <UserContext.Provider value={{ token, setToken, userId, convertToken }} >
+    function convertToken() {
+        const decoded = jwtDecode(localStorage.getItem('accessToken'))
+        // const id = decoded?.id
+        // const role = decoded?.role
+        setUser(decoded)
+        console.log(decoded);
+        // setUserId(id)
+        // setUserRole(role)
+    }
+    return <UserContext.Provider value={{ token, setToken, user, convertToken }} >
         {props.children}
     </UserContext.Provider>
 }
