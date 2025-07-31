@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid'; // Make sure to install uuid: npm install uuid
+import { v4 as uuidv4 } from 'uuid';
 import HeroSection from './HeroSection/HeroSection'
-// import ShopbyCategories from './ShopbyCategories/ShopbyCategories'
 import Category from '../Category/Category';
+import Collections from '../Collection/Collection';
 
 
 export default function Home() {
@@ -24,6 +24,7 @@ export default function Home() {
     <div className="" >
       <HeroSection />
       <Category />
+      <Collections/>
     </div>
   )
 }

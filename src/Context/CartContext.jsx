@@ -35,9 +35,9 @@ export default function CartContextProvider({ children }) {
         }
     }
     {/* add to cart api */ }
-    function addProductToCart(productId , quantity ) {
+    function addProductToCart(productId, quantity) {
         try {
-            return axios.post('https://sheshop.salis.app/cart/add-to-cart', { productId , quantity}, {
+            return axios.post('https://sheshop.salis.app/cart/add-to-cart', { productId, quantity }, {
                 headers
             })
         } catch (error) {
@@ -57,37 +57,21 @@ export default function CartContextProvider({ children }) {
     {/* delete an item from cart api */ }
     function deleteProductFromCart(id) {
         try {
-            return axios.delete(`https://sheshop.salis.app/cart/remove-product-from-cart/${id}`, {
-                headers
-            })
+            return axios.patch(`https://sheshop.salis.app/cart/remove-product-from-cart/${id}`,
+                {},
+                { headers }
+            );
         } catch (error) {
             console.log(error);
         }
     }
 
-    {/* ckeckout api */ }
-    function CkeckOutSession(cartId, values) {
-        try {
-            return axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=http://localhost:5173`, {
-                shippingAddress: values
-            }, {
-                headers
-            })
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    
     {/* total cart items number */ }
     async function numItems() {
         const res = await getCart();
-        if (res.data.status == 'success') {
-            setCartItems(res.data.numOfCartItems)
-        }
+        setCartItems(res.data?.results?.totalItems);
     }
-    return <CartContext.Provider value={{ getCart, addProductToCart, updateProductQuantity, deleteProductFromCart, cartItems, setCartItems, CkeckOutSession }}>
+    return <CartContext.Provider value={{ getCart, addProductToCart, updateProductQuantity, deleteProductFromCart, cartItems, setCartItems }}>
         {children}
     </CartContext.Provider>
 }

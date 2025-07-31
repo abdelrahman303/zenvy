@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { FiShoppingBag } from 'react-icons/fi';
+import UpdateOrderStatus from './UpdateOrderStatus/UpdateOrderStatus';
 
 export default function OrdersManagement() {
   useEffect(() => {
@@ -15,9 +16,7 @@ export default function OrdersManagement() {
         </h1>
       </div>
 
-      <div className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-md">
-        <p className="text-gray-500 dark:text-gray-300">Orders will be listed here with filtering and actions.</p>
-      </div>
+     <UpdateOrderStatus />
     </div>
   );
 }
